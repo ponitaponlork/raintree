@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f6f3" />
+    <meta name="description" content="A clear, thoughtful wealth planning conversation." />
+    <title>Raintree | Wealth Advisory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-main">
+          <div class="sidebar-topbar">
+            <a class="brand" href="/" aria-label="Raintree home">
+            <svg class="brand-mark" viewBox="0 0 32 30" fill="none" aria-hidden="true">
+              <rect x="0" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+              <rect x="7" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+              <rect x="14" y="0" width="3.5" height="30" rx="1" fill="currentColor" />
+              <rect x="21" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+              <rect x="28" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+            </svg>
+            <span>Raintree</span>
+            </a>
+          </div>
+
+          <label class="client-search" id="client-search-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 4.4 4.4"/></svg>
+            <input id="client-search" type="search" placeholder="Search" aria-label="Search clients and chats" />
+            <kbd>Ctrl K</kbd>
+          </label>
+
+          <button class="new-chat-button" id="new-client-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            <span>New Client</span>
+          </button>
+
+          <div class="sidebar-section clients-section">
+            <div class="section-label"><span>Clients</span><span id="client-count">0</span>
+              <div class="section-actions">
+                <button id="sort-clients-button" type="button" aria-label="Sort clients" title="Sort clients"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10m-7 6h4"/></svg></button>
+                <button id="add-client-button" type="button" aria-label="Add client" title="Add client"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3zM12 12v5m-2.5-2.5h5"/></svg></button>
+              </div>
+            </div>
+            <nav class="project-list" id="project-list" aria-label="Clients"></nav>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="mobile-header">
+          <button class="menu-button" id="menu-button" type="button" aria-label="Open sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </button>
+          <span>Raintree</span>
+          <span class="mobile-header-spacer"></span>
+        </header>
+
+        <div class="thread-header">
+          <div class="thread-heading" hidden>
+            <span class="project-crumb" id="active-client-name">Select a client</span>
+            <span class="crumb-divider">/</span>
+            <h1 id="thread-title">Choose a client or chat</h1>
+          </div>
+          <button class="thread-menu" id="thread-menu" type="button" aria-label="Thread options" title="Thread options">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+          </button>
+        </div>
+
+        <section class="conversation" id="conversation" aria-live="polite">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-mark">
+              <svg viewBox="0 0 32 30" fill="none" aria-hidden="true">
+                <rect x="0" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+                <rect x="7" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+                <rect x="14" y="0" width="3.5" height="30" rx="1" fill="currentColor" />
+                <rect x="21" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+                <rect x="28" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+              </svg>
+            </div>
+            <h2 id="empty-title">Start with a client</h2>
+            <p id="empty-copy">Create a client to keep their notes, files, and conversations together.</p>
+            <button class="empty-action" id="empty-action" type="button">Create a client</button>
+          </div>
+          <div class="client-profile" id="client-profile" hidden></div>
+          <div class="welcome" id="welcome" hidden>
+            <div class="welcome-mark">
+              <svg viewBox="0 0 32 30" fill="none" aria-hidden="true">
+                <rect x="0" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+                <rect x="7" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+                <rect x="14" y="0" width="3.5" height="30" rx="1" fill="currentColor" />
+                <rect x="21" y="4" width="3.5" height="26" rx="1" fill="currentColor" />
+                <rect x="28" y="8" width="3.5" height="22" rx="1" fill="currentColor" />
+              </svg>
+            </div>
+            <h2>Conversation</h2>
+            <p>Ask a question about goals, investment options, or planning scenarios.</p>
+          </div>
+          <div class="messages" id="messages"></div>
+        </section>
+
+        <footer class="composer-wrap" id="composer-wrap" hidden>
+          <div class="suggestions" id="prompt-suggestions">
+            <button type="button" data-prompt="Guide me through a risk profile, covering time horizon, liquidity needs, investment experience, and comfort with losses.">Assess risk profile</button>
+            <button type="button" data-prompt="Compare the available ETF examples by risk, expense ratio, liquidity, and trade-offs.">Compare ETF examples</button>
+            <button type="button" data-prompt="Prepare an agenda and focused questions for the next advisory discussion.">Prepare advisory discussion</button>
+          </div>
+          <div class="attachment-tray" id="attachment-tray" hidden></div>
+          <form class="composer" id="chat-form">
+            <textarea id="message-input" rows="1" placeholder="Ask a question..." aria-label="Ask a question"></textarea>
+            <div class="composer-bottom">
+              <div class="composer-tools">
+                <button class="attach-button" id="attach-button" type="button" aria-label="Attach files" title="Attach files">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20.5 11.5-8.9 8.9a5.2 5.2 0 0 1-7.4-7.4l9.5-9.5a3.5 3.5 0 0 1 5 5l-9.5 9.5a1.8 1.8 0 0 1-2.5-2.5l8.9-8.9" /></svg>
+                </button>
+                <input id="file-input" type="file" accept=".txt,.md,.csv,.json,.yaml,.yml,.log,.pdf,text/plain,text/markdown,text/csv,application/json,application/pdf" multiple hidden />
+                <span class="composer-hint">PDF, TXT, MD, CSV, JSON, YAML</span>
+              </div>
+              <button type="submit" class="send-button" id="send-button" aria-label="Send message" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+              </button>
+            </div>
+          </form>
+          <div class="footer-note">Extracted file text is sent with chats and shared across this client’s threads.</div>
+        </footer>
+      </main>
+    </div>
+
+    <div class="context-menu" id="context-menu" role="menu" hidden></div>
+    <div class="modal-backdrop" id="client-modal-backdrop" hidden>
+      <section class="client-modal" role="dialog" aria-modal="true" aria-labelledby="client-modal-title">
+        <h2 id="client-modal-title">New Client</h2>
+        <p class="modal-copy">Rasa maintains advisory context as the conversation develops.</p>
+        <form id="client-form">
+          <label for="client-name-input">Client name</label>
+          <input id="client-name-input" name="name" maxlength="80" required placeholder="e.g. Jordan Lee" />
+          <div class="client-files" id="client-files" hidden></div>
+          <div class="modal-actions">
+            <button type="button" class="button-secondary" id="cancel-client">Cancel</button>
+            <button type="submit" class="button-primary" id="save-client">Create client</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script>
+      window.pdfjsReady = import('https://cdn.jsdelivr.net/npm/pdfjs-dist@6.4.299/build/pdf.min.mjs')
+        .then(pdfjsLib => { window.pdfjsLib = pdfjsLib; })
+        .catch(error => { console.warn('PDF support could not be loaded:', error); });
+    </script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
