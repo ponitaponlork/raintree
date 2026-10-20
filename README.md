@@ -4,12 +4,82 @@ A small chat interface for a wealth-advisory conversation, backed by a Rasa Mant
 
 ## Run it
 
-The current Mantle quickstart requires Python 3.10–3.13, a Rasa license, and an OpenRouter API key. The project pins the pre-release version listed in the [Rasa Mantle getting started guide](https://mantle.rasa.com/getting-started). The model group uses OpenRouter's OpenAI-compatible endpoint with `nvidia/nemotron-3.5-super-vl:free`.
+For the complete setup guide, see [`GUIDE.md`](./GUIDE.md). The instructions below cover the same setup in this README.
 
-1. Create and activate a virtual environment, then install `requirements.txt`.
-2. Copy `.env.example` to `.env` and fill in `RASA_LICENSE` and `OPENROUTER_API_KEY`. Load those variables into your shell before launching Rasa. Do not commit actual secrets.
-3. From this folder, run `rasa train` and then `rasa run`.
-4. In another terminal, run `python server.py` and open `http://127.0.0.1:8000`.
+### Requirements
+
+- Windows 10 or 11 with Python 3.10–3.13 installed.
+- A Rasa license. See the [Rasa Mantle getting started guide](https://mantle.rasa.com/getting-started) for current access and setup requirements.
+- An [OpenRouter API key](https://openrouter.ai/keys).
+
+The project pins the pre-release Rasa Pro version listed in the Mantle quickstart. The model group uses OpenRouter's OpenAI-compatible endpoint with `nvidia/nemotron-3.5-super-vl:free`.
+
+### 1. Create a virtual environment
+
+Open PowerShell in the project folder and run:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+If PowerShell blocks activation, use the virtual environment's executables directly, for example:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\rasa.exe train
+```
+
+### 2. Add your credentials
+
+Copy the example file and edit the copy:
+
+```powershell
+Copy-Item .env.example .env
+notepad .env
+```
+
+Set these values in `.env` without surrounding quotes:
+
+```dotenv
+RASA_LICENSE=your-rasa-license
+OPENROUTER_API_KEY=your-openrouter-api-key
+```
+
+`.env` is ignored by Git and should stay on your machine. PowerShell and Rasa do not automatically load it. In each PowerShell terminal that runs Rasa, load the values into that terminal's process environment:
+
+```powershell
+Get-Content .env | ForEach-Object {
+    if ($_ -match '^\s*([^#][^=]*)=(.*)$') {
+        [Environment]::SetEnvironmentVariable($Matches[1].Trim(), $Matches[2].Trim(), 'Process')
+    }
+}
+```
+
+Keep that terminal open while Rasa is running. The frontend bridge does not need these credentials.
+
+### 3. Train and start Rasa
+
+In the first PowerShell terminal, load the `.env` values using the command above, then run:
+
+```powershell
+rasa train
+rasa run
+```
+
+Rasa starts its REST channel at `http://127.0.0.1:5005` by default. The chat bridge uses that endpoint. To use a different REST webhook, set `RASA_WEBHOOK` before starting `server.py`.
+
+### 4. Start the chat interface
+
+Open a second PowerShell terminal in the project folder. Activate the virtual environment if desired, then run:
+
+```powershell
+python server.py
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser. Keep both the Rasa terminal and the chat server terminal running. Use this local HTTP address rather than opening `index.html` directly, so the chat can reach the local REST bridge.
 
 The browser keeps a conversation sender ID for the current session and sends messages through the local bridge to Rasa's REST webhook. Set `RASA_WEBHOOK` to a different REST webhook URL if your Rasa server runs elsewhere.
 
