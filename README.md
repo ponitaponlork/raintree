@@ -111,3 +111,13 @@ The UI accepts either snake_case or camelCase field names:
   }
 }
 ```
+
+## Run the unit tests
+
+The focused unit tests cover four deterministic functions: risk-profile scoring, illustrative allocation generation, product comparison, and profile extraction from assistant text. The tool tests use lightweight Rasa SDK stand-ins, so they can run without installing Rasa.
+
+Run them from the project root with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
