@@ -1,6 +1,6 @@
 # Raintree — Wealth Advisory Agent
 
-A small chat interface for a wealth-advisory conversation, backed by a Rasa Mantle agent. It supports structured risk conversations, comparison of sample products, and transparent illustrative allocations. It does not execute financial transactions.
+A small chat interface for a wealth-advisory conversation, backed by a Rasa Mantle agent. Oar is the name of the AI assistant. It supports structured risk conversations, comparison of sample products, and transparent illustrative allocations. It does not execute financial transactions.
 
 ## Run it
 
